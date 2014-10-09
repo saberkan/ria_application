@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RIA</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <script src="js/libs/jquery.md5.js"></script>
+  <script src="private/events.js"></script>
+  <script src="private/action/userAction.js"></script>
+  <script src="private/action/eventAction.js"></script>
+  <script src="private/model/user.js"></script>
+  <script src="private/model/event.js"></script>
+  <script>
+  $(function() {
+    $( "#date" ).datepicker();
+    $( "#date" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $( "#datemodif" ).datepicker();
+    $( "#datemodif" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+  });
+      
+  $(function() {
+    $( "#tabs" ).tabs();
+  });
+  
+  $(function() {
+    $( "#progressbarAllEvents" ).progressbar({
+      value: false
+    });
+  });
+  $(function() {
+    $( "#progressbarMyEvents" ).progressbar({
+      value: false
+    });
+  });
+  $(function() {
+    $( "#progressbarSubscriptions" ).progressbar({
+      value: false
+    });
+  });
+  
+  
+  $(function() {
+    createEventDialog = $( "#create-event-dialog-form" ).dialog({
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Create": createEvent,
+        Cancel: function() {
+          createEventDialog.dialog( "close" );
+        }
+      }
+    });
+    $( "#create-event" ).button().on( "click", function() {
+        createEventDialog.dialog( "open" );
+    });
+  });
+  
+  $(function() {
+    modifyEventDialog = $( "#modify-event-dialog-form" ).dialog({
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Modify": modifyEvent,
+        Cancel: function() {
+          modifyEventDialog.dialog( "close" );
+        }
+      }
+    });
+  });
+  
+  $(function() {
+      connectDialog = $( "#connect-dialog-form" ).dialog({
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      dialogClass: 'no-close',
+      autoOpen: true,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Connect": connect
+      }
+    });
+  });
+  $(function() {
+    $( "#accordion" ).accordion({collapsible: true, heightStyle: "content"});
+  });
+  </script>
+</head>
+<body id="centerContainer">
+         <div style="padding: 30px; margin-bottom: 30px; color: inherit; background-color: #eee;">
+            <h1 align="center">Events application RIA - Thesis prototype</h1>
+        </div>
+<div id="tabs">
+  <ul>
+    <li><a href="#allEvents">All Events</a></li>
+    <li><a href="#MyEvents">My Events</a></li>
+    <li><a href="#Subscriptions">Subscriptions</a></li>
+  </ul>
+    <div id="allEvents">
+        <div id="accordionAllEvents" class="accordion">
+            Searching for infromation...
+            <div id="progressbarAllEvents"></div>
+        </div>
+    </div>
+  <div id="MyEvents">
+      <button id="create-event">Create Event</button>
+      <div id="accordionMyEvents" class="accordion">
+          Searching for infromation...
+          <div id="progressbarMyEvents"></div>
+      </div>
+  </div>
+  <div id="Subscriptions">
+      <div id="accordionSubscriptions" class="accordion">
+          Searching for infromation...
+          <div id="progressbarSubscriptions"></div>
+      </div>
+  </div>
+</div>
+    
+    
+<div id="create-event-dialog-form" title="Create Event">
+  <form>
+    <fieldset>
+      <label for="title">Title</label>
+      <input type="text" name="ajout" id="title" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Description</label>
+      <input type="text" name="ajout" id="description" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Date</label>
+      <input type="text" name="ajout" id="date" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Image</label>
+      <input type="text" name="ajout" id="image" class="text ui-widget-content ui-corner-all"></input>
+    </fieldset>
+  </form>
+</div>
+
+<div id="modify-event-dialog-form" title="Modify Event">
+  <form>
+    <fieldset>
+      <input type="hidden" name="modification" id="id" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Title</label>
+      <input type="text" name="modification" id="title" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Description</label>
+      <input type="text" name="modification" id="description" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Date</label>
+      <input type="text" name="modification" id="datemodif" class="text ui-widget-content ui-corner-all"></input>
+      <label for="title">Image</label>
+      <input type="text" name="modification" id="image" class="text ui-widget-content ui-corner-all"></input>
+    </fieldset>
+  </form>
+</div>
+ 
+<div id="connect-dialog-form" title="Connect">
+  <form>
+    <fieldset>
+      <label for="login">Login</label><br>
+      <input type="text" name="connection" id="login" class="text ui-widget-content ui-corner-all"><br>
+      <label for="password">Password</label><br>
+      <input type="text" name="connection" id="password" class="text ui-widget-content ui-corner-all">
+    </fieldset>
+  </form>
+</div>
+
+</body>
+</html>
